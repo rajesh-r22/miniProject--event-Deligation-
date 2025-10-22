@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Element-Table</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .mainBody {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 15px;
+      padding: 10px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .element {
+      background-color: #4caf50;
+      color: white;
+      border-radius: 8px;
+      padding: 20px 0;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    .element:hover {
+      background-color: #388e3c;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body onload="initializeElementTable()">
+  <h1>Event Delegation – Element Table</h1>
+  <section class="mainBody"></section>
+
+  <script>
+    const createPeriodicElement = (symbol, atomicNumber, name) => {
+      const element = document.createElement("div");
+      element.classList.add("element");
+      element.innerText = symbol;
+      element.setAttribute("data-atomic-number", atomicNumber);
+      element.setAttribute("data-element-name", name);
+      return element;
+    };
+
+    const handleElementClick = (event) => {
+      const target = event.target;
+      if (target.classList.contains("element")) {
+        const atomicNumber = target.getAttribute("data-atomic-number");
+        const elementName = target.getAttribute("data-element-name");
+        alert(`Atomic Number: ${atomicNumber}\nElement Name: ${elementName}`);
+      }
+    };
+
+    function initializeElementTable() {
+      const mainBody = document.querySelector(".mainBody");
+      for (let i = 1; i <= 50; i++) {
+        const element = createPeriodicElement(`Elem${i}`, i, `Element${i}`);
+        mainBody.append(element);
+      }
+      mainBody.addEventListener("click", handleElementClick);
+    }
+  </script>
+</body>
+</html>
